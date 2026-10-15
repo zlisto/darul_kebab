@@ -126,7 +126,7 @@ export function collide(pos) {
 export const TALK_DIST = 2.1
 
 export function locate(x, z) {
-  if (Math.hypot(x - OWNER.x, z - OWNER.z) < TALK_DIST) return 'Darul Kebab · talking with the owner'
+  if (Math.hypot(x - OWNER.x, z - OWNER.z) < TALK_DIST) return 'Darul Kebab · talking with Monir, the owner'
   if (x > 5.0) return 'Darul Kebab · at the buffet'
   if (x < -5.4) return 'Darul Kebab · by the windows on Mass Ave'
   if (z < -5.0) return 'Darul Kebab · under the violin and banjo'

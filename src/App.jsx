@@ -63,8 +63,8 @@ export default function App() {
       </div>
       {talking && playing && (
         <div className="speech">
-          <b>The owner</b>
-          Welcome, welcome{me?.name ? `, ${me.name}` : ''}! Sit anywhere you like. The biryani just came out of the kitchen.
+          <b>Monir Saji · owner</b>
+          Hey{me?.name ? ` ${me.name}` : ''}, I'm Monir, welcome to Darul Kebab. Please sit anywhere and enjoy our authentic Bangladeshi food.
         </div>
       )}
       <div className={showMap ? 'mapwrap' : 'mapwrap hidden'}>
@@ -84,7 +84,7 @@ export default function App() {
           <div className="card">
             <div className="kicker">Cambridge, MA · closed, rebuilt here{me?.name ? ` · visiting as ${me.name}` : ''}</div>
             <h1>Darul Kebab</h1>
-            <p className="sub">Walk in off Mass Ave: white tablecloths under red ones, the buffet of chafing dishes along the back wall, and the owner waiting with a plate of biryani.</p>
+            <p className="sub">Walk in off Mass Ave: white tablecloths under red ones, the buffet of chafing dishes along the back wall, and Monir, the owner, waiting with a plate of biryani.</p>
             <button className="go">{isTouch ? 'Tap to walk in' : 'Click to walk in'}</button>
             {!isTouch && (
               <button
