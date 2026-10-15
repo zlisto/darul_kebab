@@ -39,6 +39,9 @@ export default function App() {
     touchRef.current.move = [0, 0]
     setTouchOn(on)
   }
+  useEffect(() => {
+    document.body.classList.toggle('freelook', free)
+  }, [free])
   const playing = locked || touchOn || free
   useEffect(() => {
     if (!free) return
@@ -96,7 +99,7 @@ export default function App() {
         {showMap ? 'hide map' : 'map'}
       </button>
       {playing && <div className="crosshair" />}
-      {free && <div className="hint">Click to look around · WASD to walk</div>}
+      {free && <div className="hint">Move the mouse to look · click to lock it · WASD to walk</div>}
       {touchOn && <TouchControls touchRef={touchRef} onPause={() => setTouch(false)} />}
 
       {!playing && (

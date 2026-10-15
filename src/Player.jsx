@@ -11,6 +11,7 @@ const CROUCH_EYE = 1.05
 const JUMP_SPEED = 4.2
 const GRAVITY = 12
 const LOOK_SPEED = 0.005 // radians per touch pixel
+const MOUSE_SPEED = 0.002 // radians per mouse pixel, the same as PointerLockControls
 
 export default function Player({ lockRef, mapRef, touchRef, freeRef, onLock, onWhere }) {
   const { camera, gl } = useThree()
@@ -43,7 +44,19 @@ export default function Player({ lockRef, mapRef, touchRef, freeRef, onLock, onW
     window.addEventListener('keydown', down)
     window.addEventListener('keyup', up)
     window.addEventListener('blur', blur)
+    // Arrived through a portal (freeRef): browsers only lock the mouse after a click, so until then
+    // the view follows the mouse as it moves over the page. The first click locks it for real.
+    const look = (e) => {
+      if (!freeRef?.current || controls.isLocked) return
+      const cap = (v) => Math.max(-60, Math.min(60, v)) // the first event after a page load can jump
+      euler.setFromQuaternion(camera.quaternion)
+      euler.y -= cap(e.movementX) * MOUSE_SPEED
+      euler.x = Math.max(-1.45, Math.min(1.45, euler.x - cap(e.movementY) * MOUSE_SPEED))
+      camera.quaternion.setFromEuler(euler)
+    }
+    window.addEventListener('mousemove', look)
     return () => {
+      window.removeEventListener('mousemove', look)
       controls.removeEventListener('lock', on)
       controls.removeEventListener('unlock', off)
       controls.dispose()
@@ -51,7 +64,7 @@ export default function Player({ lockRef, mapRef, touchRef, freeRef, onLock, onW
       window.removeEventListener('keyup', up)
       window.removeEventListener('blur', blur)
     }
-  }, [camera, controls, lockRef, onLock])
+  }, [camera, controls, lockRef, onLock, freeRef, euler])
 
   useFrame((_, rawDt) => {
     const dt = Math.min(rawDt, 0.05)
