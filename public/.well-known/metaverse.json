@@ -1,0 +1,18 @@
+{
+  "protocol": "mvw/0.1",
+  "name": "Darul Kebab",
+  "description": "A Cambridge restaurant on the east side of Mass Ave (now closed): one yellow dining room, tables with red cloths over white ones, a buffet of chafing dishes along the east wall, and the owner by the door holding a plate of biryani.",
+  "spawns": {
+    "front_door": "Just inside the front door on the west wall, facing the dining room and the buffet",
+    "default": "Same as front_door"
+  },
+  "portals": [
+    {
+      "id": "to_yale",
+      "label": "Yale SOM · Evans Hall",
+      "href": "https://zlisto.github.io/yale_som_virtual/",
+      "spawn": "darul_kebab_portal",
+      "where": "The glass front door on the west wall"
+    }
+  ]
+}
