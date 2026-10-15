@@ -12,7 +12,7 @@ const JUMP_SPEED = 4.2
 const GRAVITY = 12
 const LOOK_SPEED = 0.005 // radians per touch pixel
 
-export default function Player({ lockRef, mapRef, touchRef, onLock, onWhere }) {
+export default function Player({ lockRef, mapRef, touchRef, freeRef, onLock, onWhere }) {
   const { camera, gl } = useThree()
   const controls = useMemo(() => new PointerLockControls(camera, gl.domElement), [camera, gl])
   const keys = useRef({})
@@ -63,7 +63,8 @@ export default function Player({ lockRef, mapRef, touchRef, onLock, onWhere }) {
       camera.rotation.set(pitch, (yaw * Math.PI) / 180, 0, 'YXZ')
     }
     const touch = touchRef.current
-    const active = controls.isLocked || touch.active
+    // freeRef: arrived through a portal, so the keys work before the first click locks the mouse
+    const active = controls.isLocked || touch.active || freeRef?.current
 
     if (touch.active && (touch.look[0] || touch.look[1])) {
       euler.setFromQuaternion(camera.quaternion)
