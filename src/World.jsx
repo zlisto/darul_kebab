@@ -508,8 +508,8 @@ export default function World() {
       <HighChair M={M} />
       <Decor M={M} />
       <Owner />
-      {/* walk out the front door onto Mass Ave and you're back at Yale */}
-      <Portal x={xMin + 0.1} z={DOOR.z} rot={Math.PI / 2} w={DOOR.w} h={2.25} label="Yale SOM" sub="Evans Hall · portal" {...PORTAL} />
+      {/* walk out the front door onto Mass Ave and you're in Metaverse Square */}
+      <Portal x={xMin + 0.1} z={DOOR.z} rot={Math.PI / 2} w={DOOR.w} h={2.25} label="Metaverse Square" sub="every world · portal" {...PORTAL} />
     </>
   )
 }

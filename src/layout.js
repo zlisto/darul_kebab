@@ -18,10 +18,10 @@ export const SPAWN = pickSpawn(SPAWNS)
 export const DOOR = { z: 0, w: 1.2 } // glass door in the middle of the west wall
 export const KITCHEN = { x: 4.4, w: 1.1 } // swinging door in the south wall, behind the buffet
 
-// the front door is also a portal back to Yale
+// the front door is also a portal out to Metaverse Square, the hub with a portal to every world
 export const PORTAL = {
-  href: import.meta.env.DEV ? 'http://localhost:5173/' : 'https://zlisto.github.io/yale_som_virtual/',
-  spawn: 'darul_kebab_portal',
+  href: import.meta.env.DEV ? 'http://localhost:5178/' : 'https://zlisto.github.io/hub_world/',
+  spawn: 'by_darul_kebab', // the square's spawn in front of its portal back here
   back: 'front_door',
 }
 

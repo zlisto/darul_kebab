@@ -8,10 +8,10 @@
   },
   "portals": [
     {
-      "id": "to_yale",
-      "label": "Yale SOM · Evans Hall",
-      "href": "https://zlisto.github.io/yale_som_virtual/",
-      "spawn": "darul_kebab_portal",
+      "id": "to_metaverse_square",
+      "label": "Metaverse Square",
+      "href": "https://zlisto.github.io/hub_world/",
+      "spawn": "by_darul_kebab",
       "where": "The glass front door on the west wall"
     }
   ]
