@@ -2,7 +2,7 @@
 
 **Walk it in your browser:** https://zlisto.github.io/darul_kebab/
 
-A first-person walk-through of the dining room of Darul Kebab, a Cambridge restaurant that has since closed. It's built with React, Vite, three.js, and @react-three/fiber, in the same style as `../yale_som_virtual`.
+A first-person walk-through of the dining room of Darul Kebab, a Cambridge restaurant that has since closed. It's built with React, Vite, three.js, and @react-three/fiber, in the same style as `https://github.com/zlisto/yale_som_virtual`.
 
 The restaurant was on the east side of Mass Ave, so you walk in through the glass door on the west wall. Inside is one yellow dining room under a drop ceiling with a red trim band: twelve 4-top tables with a red cloth over the white one and teal napkins folded in the glasses, dark cherry slat-back chairs, and the buffet along the east wall, a gold-skirted counter with ten round chafing dishes and their name cards. Above the buffet are three TVs (one on) and framed photos of dancers; on the north wall are a violin, a red-framed print and a banjo. The owner waits by the door holding a plate of biryani. Walk up to him and he says hello.
 
