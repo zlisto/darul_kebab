@@ -495,7 +495,7 @@ function Decor({ M }) {
   )
 }
 
-export default function World() {
+export default function World({ talkingTo = null }) {
   const M = useMaterials()
   return (
     <>
@@ -507,7 +507,7 @@ export default function World() {
       <Buffet M={M} />
       <HighChair M={M} />
       <Decor M={M} />
-      <Owner />
+      <Owner talking={talkingTo === 'monir'} />
       {/* walk out the front door onto Mass Ave and you're in Metaverse Square */}
       <Portal x={xMin + 0.1} z={DOOR.z} rot={Math.PI / 2} w={DOOR.w} h={2.25} label="Metaverse Square" sub="every world · portal" {...PORTAL} />
       {DOORS.map((d) => (

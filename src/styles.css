@@ -89,6 +89,43 @@ body,
   pointer-events: none;
 }
 
+.crosshair.on {
+  box-shadow: 0 0 12px var(--pink);
+}
+
+.talkhint {
+  position: fixed;
+  left: 50%;
+  top: calc(50% + 28px);
+  transform: translateX(-50%);
+  z-index: 6;
+  color: var(--pink-soft);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.talkhint span {
+  padding: 6px 12px;
+  background: rgba(11, 11, 13, 0.82);
+  border: 1px solid var(--pink);
+  border-radius: 999px;
+}
+
+.talkhint b {
+  color: var(--pink);
+}
+
+.talkhint button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--pink);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -378,9 +415,74 @@ body,
   margin: 0;
 }
 
+
+.guide-msg.you {
+  align-self: flex-end;
+  background: #2a1520;
+  border: 1px solid var(--pink);
+  border-bottom-right-radius: 4px;
+}
+
+.guide-msg.typing {
+  color: var(--pink-soft);
+  letter-spacing: 2px;
+}
+
+.guide-msg ul {
+  margin: 0.4em 0 0;
+  padding-left: 1.2em;
+}
+
+.guide-msg li {
+  margin: 0.15em 0;
+}
+
+.guide-msg b {
+  color: var(--pink-soft);
+}
+
+.guide-asks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 16px;
+  border-top: 1px solid #2a2a31;
+}
+
+.guide-asks button {
+  border: 1px solid var(--pink);
+  background: none;
+  color: var(--pink-soft);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.guide-asks button:hover:not(:disabled) {
+  background: var(--pink);
+  color: var(--black);
+}
+
+.guide-asks button.asked {
+  border-color: #3a3a44;
+  color: #8f8f9a;
+}
+
+.guide-asks button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .guide-foot {
   padding: 0 16px 10px;
   font-size: 11px;
+  color: #8f8f9a;
+}
+
+.world-none {
+  margin: 0 0 6px;
+  font-size: 13px;
   color: #8f8f9a;
 }
 

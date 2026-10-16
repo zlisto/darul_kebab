@@ -1,8 +1,11 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { OWNER } from './layout.js'
+import { TALKERS } from './talk.js'
 import * as T from './textures.js'
+
+export const OWNER_SLUG = 'monir'
 
 // The owner, built from primitives like the Yale professors: striped pink shirt, navy tie with
 // white dots, a big smile, holding a square plate of biryani out toward you.
@@ -100,7 +103,7 @@ function Face() {
   )
 }
 
-export default function Owner() {
+export default function Owner({ talking = false }) {
   const root = useRef()
   const body = useRef()
   const plate = useRef()
@@ -114,13 +117,18 @@ export default function Owner() {
   const tie = useMemo(() => new THREE.MeshStandardMaterial({ map: T.tieTex(), roughness: 0.5 }), [])
   const skin = m(SKIN)
 
+  useEffect(() => {
+    TALKERS.set(OWNER_SLUG, root.current)
+    return () => TALKERS.delete(OWNER_SLUG)
+  }, [])
+
   useFrame(({ camera, clock }, dt) => {
     const t = clock.elapsedTime
-    // turn to face you
+    // turn to face you (faster while chatting)
     const want = Math.atan2(camera.position.x - OWNER.x, camera.position.z - OWNER.z)
     let d = want - root.current.rotation.y
     d = Math.atan2(Math.sin(d), Math.cos(d))
-    root.current.rotation.y += d * Math.min(1, dt * 3)
+    root.current.rotation.y += d * Math.min(1, dt * (talking ? 5 : 3))
     // breathing, a little sway, and the plate offered forward
     body.current.scale.y = 1 + Math.sin(t * 1.6) * 0.006
     body.current.rotation.z = Math.sin(t * 0.7) * 0.015
