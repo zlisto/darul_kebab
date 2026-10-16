@@ -115,7 +115,7 @@ export default function Player({ lockRef, mapRef, touchRef, freeRef, onLock, onW
         mz /= l
       }
       const crouching = active && k.KeyC
-      const speed = crouching ? 1.8 : sprint ? 6 : 3.4 // a small room: slower than Yale's halls
+      const speed = crouching ? 1.8 : sprint ? 20 : 12 // match Metaverse Web standard pace
       const pos = collide({ x: camera.position.x + mx * speed * dt, z: camera.position.z + mz * speed * dt })
       camera.position.x = pos.x
       camera.position.z = pos.z
