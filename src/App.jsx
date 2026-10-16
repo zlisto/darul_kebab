@@ -39,33 +39,51 @@ export default function App() {
     touchRef.current.move = [0, 0]
     setTouchOn(on)
   }
+  const nearOwner = where.includes('owner')
+  const [talking, setTalking] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
   useEffect(() => {
     document.body.classList.toggle('freelook', free)
   }, [free])
-  const playing = locked || touchOn || free
+  // talking counts as playing so releasing the mouse for Monir's panel doesn't flash the start screen
+  const playing = locked || touchOn || free || talking
   useEffect(() => {
-    if (!free) return
+    if (!free || talking) return
     if (isTouch) {
       setTouch(true) // phones: the joystick needs no click, so just turn it on
       setFree(false)
       return
     }
-    const click = (e) => !e.target.closest('button') && lockRef.current?.()
+    const click = (e) => !e.target.closest('button, a, .guide') && lockRef.current?.()
     addEventListener('mousedown', click)
     return () => removeEventListener('mousedown', click)
-  }, [free]) // eslint-disable-line react-hooks/exhaustive-deps
-  const nearOwner = where.includes('owner')
-  const [talking, setTalking] = useState(false)
-  const [dismissed, setDismissed] = useState(false)
+  }, [free, talking]) // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!nearOwner) setDismissed(false)
   }, [nearOwner])
   useEffect(() => {
-    if (nearOwner && playing && !dismissed) {
+    if (nearOwner && (locked || touchOn || free) && !dismissed) {
+      setFree(false)
       setTalking(true)
       document.exitPointerLock?.()
     } else if (!nearOwner) setTalking(false)
-  }, [nearOwner, playing, dismissed])
+  }, [nearOwner, locked, touchOn, free, dismissed])
+  const endTalk = useCallback(() => {
+    setDismissed(true)
+    setTalking(false)
+    if (touchOn) return
+    setFree(true)
+    lockRef.current?.()
+  }, [touchOn])
+  useEffect(() => {
+    if (!talking || touchOn) return
+    const clickOut = (e) => {
+      if (e.button !== 0 || e.target.closest('.guide, button, a')) return
+      endTalk()
+    }
+    addEventListener('mousedown', clickOut)
+    return () => removeEventListener('mousedown', clickOut)
+  }, [talking, touchOn, endTalk])
   // music starts the first time you walk in (browsers need a click first); N or the button mutes it
   const [musicOn, setMusicOn] = useState(true)
   useEffect(() => {
@@ -94,16 +112,7 @@ export default function App() {
         <span className="dot" />
         {where}
       </div>
-      {talking && playing && (
-        <OwnerPanel
-          visitor={me?.name}
-          onClose={() => {
-            setDismissed(true)
-            setTalking(false)
-            if (!touchOn) lockRef.current?.()
-          }}
-        />
-      )}
+      {talking && <OwnerPanel visitor={me?.name} onClose={endTalk} />}
       <div className={showMap ? 'mapwrap' : 'mapwrap hidden'}>
         <Minimap drawRef={mapRef} />
       </div>
@@ -113,9 +122,9 @@ export default function App() {
       <button className="maptoggle" onClick={() => setShowMap((s) => !s)}>
         {showMap ? 'hide map' : 'map'}
       </button>
-      {playing && <div className="crosshair" />}
-      {free && <div className="hint">Move the mouse to look · click to lock it · WASD to walk</div>}
-      {touchOn && <TouchControls touchRef={touchRef} onPause={() => setTouch(false)} />}
+      {playing && !talking && <div className="crosshair" />}
+      {free && !talking && <div className="hint">Move the mouse to look · click to lock it · WASD to walk</div>}
+      {touchOn && !talking && <TouchControls touchRef={touchRef} onPause={() => setTouch(false)} />}
 
       {!playing && (
         <div className="overlay" onClick={() => (isTouch ? setTouch(true) : lockRef.current?.())}>

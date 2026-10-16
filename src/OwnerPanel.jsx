@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { DOORS, PORTAL } from './layout.js'
 import { navigate } from './mvw.js'
 import { fadeOut, whoosh } from './audio.js'
@@ -10,6 +11,11 @@ const DESTINATIONS = [
 ]
 
 export default function OwnerPanel({ visitor, onClose }) {
+  useEffect(() => {
+    const esc = (e) => e.code === 'Escape' && onClose()
+    addEventListener('keydown', esc)
+    return () => removeEventListener('keydown', esc)
+  }, [onClose])
   const go = (d) => {
     fadeOut()
     whoosh()
