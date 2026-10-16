@@ -8,6 +8,7 @@ import { EYE, SPAWN } from './layout.js'
 import { onIdentity, presence } from './mvw.js'
 import { setMuted } from './audio.js'
 import { startSong } from './song.js'
+import OwnerPanel from './OwnerPanel.jsx'
 
 export default function App() {
   const [locked, setLocked] = useState(false)
@@ -53,7 +54,18 @@ export default function App() {
     addEventListener('mousedown', click)
     return () => removeEventListener('mousedown', click)
   }, [free]) // eslint-disable-line react-hooks/exhaustive-deps
-  const talking = where.includes('owner')
+  const nearOwner = where.includes('owner')
+  const [talking, setTalking] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
+  useEffect(() => {
+    if (!nearOwner) setDismissed(false)
+  }, [nearOwner])
+  useEffect(() => {
+    if (nearOwner && playing && !dismissed) {
+      setTalking(true)
+      document.exitPointerLock?.()
+    } else if (!nearOwner) setTalking(false)
+  }, [nearOwner, playing, dismissed])
   // music starts the first time you walk in (browsers need a click first); N or the button mutes it
   const [musicOn, setMusicOn] = useState(true)
   useEffect(() => {
@@ -83,10 +95,14 @@ export default function App() {
         {where}
       </div>
       {talking && playing && (
-        <div className="speech">
-          <b>Monir Saji · owner</b>
-          Hey{me?.name ? ` ${me.name}` : ''}, I'm Monir, welcome to Darul Kebab. Please sit anywhere and enjoy our authentic Bangladeshi food.
-        </div>
+        <OwnerPanel
+          visitor={me?.name}
+          onClose={() => {
+            setDismissed(true)
+            setTalking(false)
+            if (!touchOn) lockRef.current?.()
+          }}
+        />
       )}
       <div className={showMap ? 'mapwrap' : 'mapwrap hidden'}>
         <Minimap drawRef={mapRef} />

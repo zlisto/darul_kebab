@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
-import { H, ROOM, DOOR, PORTAL, KITCHEN, TABLES, TABLE, CHAIRS, HIGHCHAIR, PLANTS, BUFFET, DISHES } from './layout.js'
+import { H, ROOM, DOOR, DOORS, PORTAL, KITCHEN, TABLES, TABLE, CHAIRS, HIGHCHAIR, PLANTS, BUFFET, DISHES } from './layout.js'
 import * as T from './textures.js'
 import Owner from './Owner.jsx'
 import Portal from './Portal.jsx'
@@ -510,6 +510,9 @@ export default function World() {
       <Owner />
       {/* walk out the front door onto Mass Ave and you're in Metaverse Square */}
       <Portal x={xMin + 0.1} z={DOOR.z} rot={Math.PI / 2} w={DOOR.w} h={2.25} label="Metaverse Square" sub="every world · portal" {...PORTAL} />
+      {DOORS.map((d) => (
+        <Portal key={d.id} x={d.x} z={d.z} rot={d.rot} href={d.href} spawn={d.spawn} back={d.back} label={d.label} sub={d.sub} color={d.color} w={1.4} h={2.25} />
+      ))}
     </>
   )
 }

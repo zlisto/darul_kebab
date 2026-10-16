@@ -12,6 +12,8 @@ export const ROOM = { xMin: -7, xMax: 7, zMin: -6, zMax: 6 }
 // arrival points (mvw/0.1): ?spawn=<id> picks one, see ../PROTOCOL.md
 export const SPAWNS = {
   front_door: { x: -6.1, z: 0, yaw: -Math.PI / 2 }, // just inside the front door, facing east
+  evans_portal: { x: -5.2, z: -2.4, yaw: Math.PI / 2 }, // in front of the Evans Hall door, facing east into the room
+  gardens_portal: { x: -5.2, z: 2.4, yaw: Math.PI / 2 },
 }
 SPAWNS.default = SPAWNS.front_door
 export const SPAWN = pickSpawn(SPAWNS)
@@ -24,6 +26,33 @@ export const PORTAL = {
   spawn: 'by_darul_kebab', // the square's spawn in front of its portal back here
   back: 'front_door',
 }
+
+// Extra doors on the west wall: back to class, and a playful stroll into the Hanging Gardens
+export const DOORS = [
+  {
+    id: 'to_evans',
+    label: 'Evans Hall',
+    sub: 'back to class',
+    href: import.meta.env.DEV ? 'http://localhost:5173/' : 'https://zlisto.github.io/evans-hall-3d/',
+    spawn: 'from_darul',
+    back: 'evans_portal',
+    x: ROOM.xMin + 0.1,
+    z: -2.4,
+    rot: Math.PI / 2,
+  },
+  {
+    id: 'to_gardens',
+    label: 'Hanging Gardens',
+    sub: 'dinner, then a stroll',
+    href: 'https://zlisto.github.io/hanging-gardens-of-babylon/',
+    spawn: 'from_square',
+    back: 'gardens_portal',
+    x: ROOM.xMin + 0.1,
+    z: 2.4,
+    rot: Math.PI / 2,
+    color: '#5fe39b',
+  },
+]
 
 // the owner waits by the door with the biryani
 export const OWNER = { x: -4.3, z: 1.4, r: 0.4 }
@@ -127,6 +156,9 @@ export const TALK_DIST = 2.1
 
 export function locate(x, z) {
   if (Math.hypot(x - OWNER.x, z - OWNER.z) < TALK_DIST) return 'Darul Kebab · talking with Monir, the owner'
+  for (const d of DOORS) {
+    if (Math.hypot(x - d.x, z - d.z) < 2.2) return `Darul Kebab · by the portal to ${d.label}`
+  }
   if (x > 5.0) return 'Darul Kebab · at the buffet'
   if (x < -5.4) return 'Darul Kebab · by the windows on Mass Ave'
   if (z < -5.0) return 'Darul Kebab · under the violin and banjo'

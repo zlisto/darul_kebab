@@ -4,7 +4,9 @@
   "description": "A Cambridge restaurant on the east side of Mass Ave (now closed): one yellow dining room, tables with red cloths over white ones, a buffet of chafing dishes along the east wall, and the owner by the door holding a plate of biryani.",
   "spawns": {
     "front_door": "Just inside the front door on the west wall, facing the dining room and the buffet",
-    "default": "Same as front_door"
+    "default": "Same as front_door",
+    "evans_portal": "In front of the Evans Hall portal on the west wall, facing into the dining room",
+    "gardens_portal": "In front of the Hanging Gardens portal on the west wall, facing into the dining room"
   },
   "portals": [
     {
@@ -13,6 +15,20 @@
       "href": "https://zlisto.github.io/hub_world/",
       "spawn": "by_darul_kebab",
       "where": "The glass front door on the west wall"
+    },
+    {
+      "id": "to_evans",
+      "label": "Evans Hall",
+      "href": "https://zlisto.github.io/evans-hall-3d/",
+      "spawn": "from_darul",
+      "where": "A glowing doorway on the west wall, south of the front door"
+    },
+    {
+      "id": "to_gardens",
+      "label": "Hanging Gardens",
+      "href": "https://zlisto.github.io/hanging-gardens-of-babylon/",
+      "spawn": "from_square",
+      "where": "A green doorway on the west wall, north of the front door — dinner, then a stroll"
     }
   ]
 }
